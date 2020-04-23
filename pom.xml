@@ -3,6 +3,13 @@
     <groupId>com.github.lukemajor</groupId>
     <artifactId>tower</artifactId>
     <version>0.1.0</version>
+    
+     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <exec.mainClass>com.github.mehrabrahman.calc.Calc</exec.mainClass>
+        <exec.args>That's not true</exec.args>
+    </properties>
 
     <dependencies>
         <dependency>
