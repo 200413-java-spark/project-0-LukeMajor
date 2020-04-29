@@ -11,6 +11,8 @@
         <exec.args>That's not true</exec.args>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
+		<name>Tower</name>
 
 	<build>
 		<plugins>

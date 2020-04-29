@@ -6,7 +6,7 @@ import java.io.BufferedReader;
  * 
  * @author LukeT
  * @version 0.1.0
- * This program creates a Big 5 personality test for the user. It should be easily extendable
+ * This program creates a Big 5 personality test for the user. It should be easily extendible
  * to create other tests as well
  *
  */
@@ -50,63 +50,91 @@ public class Tower {
     	//output results. perhaps a list for every category in a big list so more categories can be added?
     	*/
     	
+    	String url = System.getProperty("database.url", "jdbc:postgresql://192.168.99.100:5432/dbluke");
+    	String username = System.getProperty("databse.username", "luke");
+    	String password = System.getProperty("database.password", "luke");
     	ArrayList<String> dataset = new ArrayList<>();
+    	String header;
     	StringBuilder sql = new StringBuilder("");
-    	try (Scanner source = new Scanner( new FileReader("TestSheet.csv"))) {
-			//source.useDelimiter("\\s*,\\*");
+    	
+    	//Uses a scanner to parse the csv into a sql easy-to-use format
+		try (Scanner source = new Scanner( new FileReader("TestSheet.csv"))) {
+			
+			//parse the csv
 			dataset.add(source.next());
 			while (source.hasNext()) {
 				dataset.add(source.next());
 			}
+			header = dataset.get(0);
+			dataset.remove(0);
+			
+			//Add rows to the sql statement
 			for (String row : dataset) {
 				row = "insert into Extraversion values (" + row + ")\n";
 				sql.append(row);
-				//System.out.println(row);
 			}
-			System.out.print(sql);
-		} catch (IOException e) {
+			
+			
+			//add rows to the database
+			try (
+		    	    Connection connection = DriverManager.getConnection(url, username, password);
+		    	   // PreparedStatement statement = connection.prepareStatement(sql.toString());
+		    	){
+		    		//statement.execute();
+		    			
+		    		}
+		    	    } catch (SQLException ex) {
+		    	    System.out.println(ex);
+		    	    
+		    	} catch (IOException e) {
 			e.printStackTrace();
-		}
-    	
+		    	}
     	
     }
     
-    public void addRow() {
-    	String url = "jdbc:postgresql://52.15.170.98:5432/lukedb";
-    	String username = "luke";
-    	String password = "luke";
+    static void addRow() {
+    	String url = System.getProperty("database.url", "jdbc:postgresql://192.168.99.100:5432/lukedb");
+    	String username = System.getProperty("databse.username", "luke");
+    	String password = System.getProperty("database.password", "luke");
     	ArrayList<String> dataset = new ArrayList<>();
     	String header;
     	StringBuilder sql = new StringBuilder("");
-
-    	try (
-    	    Connection connection = DriverManager.getConnection(url, username, password);
-    	    PreparedStatement statement = connection.prepareStatement("blah");
-    	){
-    		//Uses a scanner to parse the csv into a sql easy-to-use format
-    		try (Scanner source = new Scanner( new FileReader("TestSheet.csv"))) {
-    			//source.useDelimiter("\\s*,\\*");
-    			dataset.add(source.next());
-    			while (source.hasNext()) {
-    				dataset.add(source.next());
-    			}
-    			header = dataset.get(0);
-    			dataset.remove(0);
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    		
-    		//Add rows to the database
-    		for (String row : dataset) {
+    	
+    	//Uses a scanner to parse the csv into a sql easy-to-use format
+		try (Scanner source = new Scanner( new FileReader("TestSheet.csv"))) {
+			
+			//parse the csv
+			dataset.add(source.next());
+			while (source.hasNext()) {
+				dataset.add(source.next());
+			}
+			header = dataset.get(0);
+			dataset.remove(0);
+			
+			//Add rows to the sql statement
+			for (String row : dataset) {
 				row = "insert into Extraversion values (" + row + ")\n";
 				sql.append(row);
-				
 			}
-    		
-    		
-    	    } catch (SQLException ex) {
-    	    System.out.println(ex);
-    	} 
+			
+			
+			//add rows to the database
+			try (
+		    	    Connection connection = DriverManager.getConnection(url, username, password);
+		    	   // PreparedStatement statement = connection.prepareStatement(sql.toString());
+		    	){
+		    		//statement.execute();
+		    			
+		    		}
+		    	    } catch (SQLException ex) {
+		    	    System.out.println(ex);
+		    	    
+		    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
+    	
 	}
 
 
