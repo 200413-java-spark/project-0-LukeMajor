@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class PointScale {
 	private ArrayList<String> questions = new ArrayList<>();
 	private ArrayList<String> scale = new ArrayList<>();
-	BufferedReader source;
+	private BufferedReader source;
 	private ArrayList<Integer> measure = new ArrayList<>();
 	
 	public PointScale() {
@@ -58,6 +58,7 @@ public class PointScale {
 	public void setScale(ArrayList<String> scale) {
 		this.scale = scale;
 	}
+	
 	
 	//initiates the measure and returns the results
 	public ArrayList<Integer> measure() {

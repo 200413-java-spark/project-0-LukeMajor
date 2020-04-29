@@ -8,14 +8,15 @@ import java.util.Scanner;
  * 
  * @author LukeT
  * @version 0.1.0
- * This class asks for a name and typical controls.
+ * This class asks for a name and typical controls, but can be used to create any free-form quiz with an
+ * array or list of questions.
  *
  */
 
 public class FillTest {
 	
-	ArrayList<String> questions = new ArrayList<>();
-	ArrayList<String> results = new ArrayList<>();
+	private ArrayList<String> questions = new ArrayList<>();
+	private ArrayList<String> results = new ArrayList<>();
 	
 	public void setQuestions(ArrayList<String> questions) {
 		this.questions = questions;

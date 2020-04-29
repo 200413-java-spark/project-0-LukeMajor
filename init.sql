@@ -1,0 +1,18 @@
+create table Extraversion (
+    race integer ,
+    age integer,
+    engnat integer,
+    gender integer,
+    hand integer,
+    country varchar,
+    E1 integer,
+    E2 integer,
+    E3 integer,
+    E4 integer,
+    E5 integer,
+    E6 integer,
+    E7 integer,
+    E8 integer,
+    E9 integer,
+    E10 integer,
+    score integer);
