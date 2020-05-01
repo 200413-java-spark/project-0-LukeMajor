@@ -17,7 +17,6 @@ import java.util.Scanner;
 public class PointScale {
 	private ArrayList<String> questions = new ArrayList<>();
 	private ArrayList<String> scale = new ArrayList<>();
-	private BufferedReader source;
 	private ArrayList<Integer> measure = new ArrayList<>();
 	
 	public PointScale() {
@@ -68,13 +67,29 @@ public class PointScale {
 	public ArrayList<Integer> measure() {
 		Scanner userInput = new Scanner(System.in);
 		
-		for (String question : questions) {
+		int count = 0;
+		while (count < questions.size()) {
 			System.out.println("Input a number to answer the following statement or question:\n"
-	    			+ "\"" + question + "\""); 
+	    			+ "\"" + questions.get(count) + "\""); 
 			for (String answer : scale) {
 				System.out.println("[" + (scale.indexOf(answer) + 1) + ": " + answer + "]");
 			}
-			measure.add(Integer.parseInt(userInput.nextLine()));
+			
+			Integer actualInput;
+			try {
+				actualInput = Integer.parseInt(userInput.nextLine());
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				System.out.println("That was not a valid option, please try again.");
+				continue;
+			}
+			if (actualInput <= (scale.size()) && actualInput > 0) {
+				measure.add(actualInput);
+				count++;
+			} else {
+				System.out.println("That was not a valid option, please try again.");
+			}
+			
 		}
 		
 		return measure;

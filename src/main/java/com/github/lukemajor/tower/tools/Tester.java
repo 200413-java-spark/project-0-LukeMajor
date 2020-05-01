@@ -4,6 +4,10 @@ package com.github.lukemajor.tower.tools;
  * This class is a factory that creates the correct test objects based on user input.
  * The input options are Openness / e, Conscientiousness / c , Extraversion / e , 
  * Agreeableness / a, and Neuroticism. 
+ * 
+ * This class became a mess after I realized the different tests aren't coded the same way, so I couldn't use a
+ * one-size-fits-all algorithm for scoring, resulting in an annoying amount of hard coding. Something to come 
+ * come back and fix later...
  */
 
 import java.io.File;
@@ -17,11 +21,11 @@ import io.Control;
 import io.SqlSource;
 
 public class Tester {
-	private File opennessQuestions = new File("OpennessStatements.txt");
-	private File conscientiousnessQuestions = new File("ConscientiousnessStatements.txt");
-	private File agreeablenessQuestions = new File("AgreeablenessStatements.txt");
-	private File extraversionQuestions = new File("ExtraversionStatements.txt");
-	private File neuroticismQuestions = new File("NeuroticismStatements.txt");
+	private File opennessQuestions = new File("src/main/Resources/OpennessStatements.txt");
+	private File conscientiousnessQuestions = new File("src/main/Resources/ConscientiousnessStatements.txt");
+	private File agreeablenessQuestions = new File("src/main/Resources/AgreeablenessStatements.txt");
+	private File extraversionQuestions = new File("src/main/Resources/ExtraversionStatements.txt");
+	private File neuroticismQuestions = new File("src/main/Resources/NeuroticismStatements.txt");
 	private String[] OceanScale = {"I completely disagree", "I moderately disagree", "I niether agree nor disagree",
 			" I moderately agree", "I completely agree" };
 	private SqlSource sqlSource = SqlSource.getInstance();
@@ -33,26 +37,26 @@ public class Tester {
 		    	//openness quiz
 		    	PointScale openness = new PointScale(opennessQuestions, OceanScale);
 		    	ArrayList<Integer> opennessResults = openness.measure();
-		    	getData(sqlSource, "openness", "e", opennessResults);
-			} else if (args[i].equalsIgnoreCase("openness") || args[i].equalsIgnoreCase("o")) {
+		    	getData(sqlSource, "openness", "o", opennessResults);
+			} else if (args[i].equalsIgnoreCase("conscientiousness") || args[i].equalsIgnoreCase("c")) {
 				
 		    	//conscientiousness quiz
 		    	PointScale conscientiousness = new PointScale(conscientiousnessQuestions, OceanScale);
 		    	ArrayList<Integer> conscientiousnessResults = conscientiousness.measure();
 		    	getData(sqlSource, "conscientiousness", "c", conscientiousnessResults);
-			} else if (args[i].equalsIgnoreCase("conscientiousness") || args[i].equalsIgnoreCase("c")) {
+			} else if (args[i].equalsIgnoreCase("agreeableness") || args[i].equalsIgnoreCase("a")) {
 				
 		    	//agreeableness quiz
 		    	PointScale agreeableness = new PointScale(agreeablenessQuestions, OceanScale);
 		    	ArrayList<Integer> agreeablenessResults = agreeableness.measure();
 		    	getData(sqlSource, "agreeableness", "a", agreeablenessResults);
-			} else if (args[i].equalsIgnoreCase("agreeableness") || args[i].equalsIgnoreCase("a")) {
+			} else if (args[i].equalsIgnoreCase("extraversion") || args[i].equalsIgnoreCase("e")) {
 				
 		    	//extraversion quiz
 		    	PointScale extraversion = new PointScale(extraversionQuestions, OceanScale);
 		    	ArrayList<Integer> extraversionResults = extraversion.measure();
 		    	getData(sqlSource, "extraversion", "e", extraversionResults);
-			} else if (args[i].equalsIgnoreCase("extraversion") || args[i].equalsIgnoreCase("e")) {
+			} else if (args[i].equalsIgnoreCase("extraversion") || args[i].equalsIgnoreCase("n")) {
 				
 		    	//neuroticism quiz
 		    	PointScale neuroticism = new PointScale(neuroticismQuestions, OceanScale);
@@ -63,16 +67,15 @@ public class Tester {
 		
 	}
 	
-	private String getData(SqlSource sqlSource, String test, String testKey, ArrayList<Integer> testResults) {
+	private void getData(SqlSource sqlSource, String test, String testKey, ArrayList<Integer> testResults) {
 		
-		ArrayList<String> dataset = new ArrayList<>();
     	String sql;
     	String sqlRequest;
     	int score = 20;
     	double avgScore = 0;
-		int lowerScore = 0;
+		double lowerScore = 0;
 		double sameScore = 0;
-		int allScores = 0;
+		double allScores = 0;
     	
 		
     	if (test.equals("openness")) {
@@ -84,7 +87,7 @@ public class Tester {
 					+ "4," + testKey + "5," + testKey + "6," + testKey + "7," + testKey + "8," + testKey + "9,"
 					+ testKey + "10) VALUES (" + Control.AGE + ", " + Control.GENDER + ", "
 					+ testResults.toString().replace("[", "").replace("]", ")") + "; \n" + "Update " + test
-					+ " Set score = 8 + ((o1 +o3 + o5 +o7 + o8 + o9 + o10) - (e2 + e4 + e6));\n";
+					+ " Set score = 8 + ((o1 +o3 + o5 +o7 + o8 + o9 + o10) - (o2 + o4 + o6));\n";
     	} else if (test.equals("conscientiousness")) {
     		score += (testResults.get(0) + testResults.get(2) + testResults.get(4) + testResults.get(6)
 			+ testResults.get(8) + testResults.get(9)) - (testResults.get(1)
@@ -128,7 +131,7 @@ public class Tester {
 					+ "4," + testKey + "5," + testKey + "6," + testKey + "7," + testKey + "8," + testKey + "9,"
 					+ testKey + "10) VALUES (" + Control.AGE + ", " + Control.GENDER + ", "
 					+ testResults.toString().replace("[", "").replace("]", ")") + "; \n" + "Update " + test
-					+ " Set score = 2 + ((n1 +n3 + n5 +n6 +n7 + n8 +n9 +n10) - (e2 + e4));\n";
+					+ " Set score = 2 + ((n1 +n3 + n5 +n6 +n7 + n8 +n9 +n10) - (n2 + n4));\n";
 		} else {
 			sql = "";
 		}
@@ -161,7 +164,7 @@ public class Tester {
 			
 			rs = statement.executeQuery("select Count(score) as lowerScore from " + test + " where score < " + score + ";\n");
 			rs.next();
-			lowerScore = rs.getInt("lowerScore");
+			lowerScore = rs.getDouble("lowerScore");
 			
 			rs = statement.executeQuery("select Count(score) as sameScore from " + test + " where score = " + score + ";\n");
 			rs.next();
@@ -169,7 +172,7 @@ public class Tester {
 			
 			rs = statement.executeQuery("select Count(score) as allScores from " + test + ";\n");
 			rs.next();
-			allScores = rs.getInt("allScores");
+			allScores = rs.getDouble("allScores");
 				
 	    	} catch (SQLException ex) {
 	    	    System.out.println(ex);
@@ -177,10 +180,13 @@ public class Tester {
 	    	} 
 		
 		double percentile = (100/allScores)*(lowerScore + 0.5 *sameScore);
-		System.out.println(percentile);
+		double sigma;
 		
 		
-		return "data";
+		System.out.println("######################################################################################");
+		System.out.println("Your " + test + " quotient is: " + score + ". You measure higher than " + percentile + "%");
+		System.out.println("of the general population.");
+		System.out.println("######################################################################################");
 	}
 
 }

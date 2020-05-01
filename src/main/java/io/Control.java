@@ -1,8 +1,9 @@
 package io;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
+/**
+ * This class sets controls for more interesting results, namely by age and gender.
+ */
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,9 +26,9 @@ public class Control {
 				if (args[i+1].equalsIgnoreCase("male") || equals("1")) {
 					GENDER = 1;
 				} else if (args[i+1].equalsIgnoreCase("female") || equals("2")) {
-				GENDER = 2;
+					GENDER = 2;
 				} else if (args[i+1].equalsIgnoreCase("other") || equals("3")) {
-				this.GENDER = 3;
+					GENDER = 3;
 				} else if (args[i].equalsIgnoreCase("help")) {
 					System.out.println("Use control to set controls for age and gender./n"
 							+ "EXAMPLE: control age 28 gender other");

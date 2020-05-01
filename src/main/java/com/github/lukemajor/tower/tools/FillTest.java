@@ -10,6 +10,8 @@ import java.util.Scanner;
  * @version 0.1.0
  * This class asks for a name and typical controls, but can be used to create any free-form quiz with an
  * array or list of questions.
+ * 
+ * I might delete this as I'm getting most of what I need from PointScale.
  *
  */
 

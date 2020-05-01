@@ -1,5 +1,9 @@
 package io;
 
+/**
+ * A singleton to keep access to the DB restricted.
+ */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
