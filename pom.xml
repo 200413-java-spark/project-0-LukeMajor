@@ -7,8 +7,8 @@
      <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <exec.mainClass>com.github.mehrabrahman.calc.Calc</exec.mainClass>
-        <exec.args>That's not true</exec.args>
+        <exec.mainClass>com.github.lukemajor.tower.Tower</exec.mainClass>
+        <exec.args></exec.args>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	

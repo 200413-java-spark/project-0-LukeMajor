@@ -34,7 +34,11 @@ public class PointScale {
 		setScale(scale);
 	}
 	
-	//method for reading questions from a file
+	/**
+	 * Sets the questions to be asked via a file.
+	 * The questions should be separated by a line break.
+	 * @param file
+	 */
 	public void setQuestions(File file) {
 		try (BufferedReader source = new BufferedReader( new FileReader(file))) {
 			String line = source.readLine();
@@ -47,14 +51,14 @@ public class PointScale {
 		}
 	}
 	
-	//set the point scale with an array of strings
+	//set the point-scale with an array of strings
 	public void setScale(String [] scale) {
 		for (int i = 0; i < scale.length; i++) {
 			this.scale.add(scale[i]);
 		}
 	}
 	
-	//sets the point scale with a list of strings
+	//sets the point-scale with a list of strings
 	public void setScale(ArrayList<String> scale) {
 		this.scale = scale;
 	}
@@ -76,7 +80,7 @@ public class PointScale {
 		return measure;
 	}
 	
-	//Override of the toString method to return the resluting measurement if it exists
+	//Override of the toString method to return the resulting measurement, if it exists
 	public String toString() {
 		if (measure.isEmpty()) {
 			return "No measurement";
@@ -85,9 +89,6 @@ public class PointScale {
 		}
 	}
 	
-	//public  getMap() {
-		
-	//}
 	
 	
 }
